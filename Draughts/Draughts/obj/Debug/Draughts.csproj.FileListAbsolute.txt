@@ -1,0 +1,10 @@
+F:\English_draughts\Draughts\Draughts\bin\Debug\Draughts.exe.config
+F:\English_draughts\Draughts\Draughts\bin\Debug\Draughts.exe
+F:\English_draughts\Draughts\Draughts\bin\Debug\Draughts.pdb
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csprojAssemblyReference.cache
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.Form1.resources
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.Properties.Resources.resources
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csproj.GenerateResource.cache
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csproj.CoreCompileInputs.cache
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.exe
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.pdb
