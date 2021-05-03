@@ -29,20 +29,33 @@ namespace Draughts
         /// </summary>
         private void InitializeComponent()
         {
+            this.boardPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // boardPanel
+            // 
+            this.boardPanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.boardPanel.Location = new System.Drawing.Point(100, 25);
+            this.boardPanel.Name = "boardPanel";
+            this.boardPanel.Size = new System.Drawing.Size(420, 429);
+            this.boardPanel.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1142, 546);
+            this.ClientSize = new System.Drawing.Size(1057, 579);
+            this.Controls.Add(this.boardPanel);
             this.Name = "Form1";
             this.Text = "English Draughts";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel boardPanel;
     }
 }
 

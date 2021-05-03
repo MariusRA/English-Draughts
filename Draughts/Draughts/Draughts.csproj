@@ -53,6 +53,7 @@
       <DependentUpon>Draughts.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Piece.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Draughts.resx">
@@ -66,6 +67,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -79,6 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\draughtsBoard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\draughtsBlack.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\draughtsWhite.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
