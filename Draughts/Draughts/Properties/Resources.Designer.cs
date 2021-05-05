@@ -63,9 +63,19 @@ namespace Draughts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap draughtsBlack {
+        internal static System.Drawing.Bitmap blueKingTransparent {
             get {
-                object obj = ResourceManager.GetObject("draughtsBlack", resourceCulture);
+                object obj = ResourceManager.GetObject("blueKingTransparent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blueTransparent {
+            get {
+                object obj = ResourceManager.GetObject("blueTransparent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +93,19 @@ namespace Draughts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap draughtsWhite {
+        internal static System.Drawing.Bitmap redKingTransparent {
             get {
-                object obj = ResourceManager.GetObject("draughtsWhite", resourceCulture);
+                object obj = ResourceManager.GetObject("redKingTransparent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redTransparent {
+            get {
+                object obj = ResourceManager.GetObject("redTransparent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

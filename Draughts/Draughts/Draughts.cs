@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace Draughts
 {
+
     public partial class Form1 : Form
     {
         PictureBox[,] board;
         int dimensXxY = 8;
+        int[,] boardPositions;
 
+        static bool pieceClicked=false;
         public Form1()
         {
             InitializeComponent();
@@ -22,9 +25,21 @@ namespace Draughts
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            boardPositions = new int[,]{
+                {1,-1,1,-1,1,-1,1,-1 },
+                {-1,1,-1,1,-1,1,-1,1 },
+                {1,-1,1,-1,1,-1,1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,-1,-1,-1,-1,-1,-1,-1 },
+                {-1,1,-1,1,-1,1,-1,1 },
+                {1,-1,1,-1,1,-1,1,-1 },
+                {-1,1,-1,1,-1,1,-1,1 }
+            };
+
             board = new PictureBox[dimensXxY, dimensXxY];
-            boardPanel.SetBounds(100, 25, 400, 400);
-            //boardPanel.BackgroundImage = Properties.Resources.draughtsBoard;
+            boardPanel.SetBounds(100, 25, 480, 480);
+            boardPanel.BackgroundImage = Properties.Resources.draughtsBoard;
 
             int top = 0, left = 0;
 
@@ -34,35 +49,77 @@ namespace Draughts
 
                 for (int j = 0; j < 8; j++)
                 {
-                    board[i, j] = new PictureBox();
-                    if (j % 2 == 0 && i % 2 != 0)
+                    if (boardPositions[i, j] == 1 && i < 4)
                     {
-                        board[i, j].BackColor = Color.FromArgb(255, 255, 0, 0);
+                        board[i, j] = new PictureBox();
+
+                        board[i, j].Location = new Point(left, top);
+                        board[i, j].Size = new Size(60, 60);
+                        board[i, j].BackColor = Color.Transparent;
+                        board[i, j].Image = Properties.Resources.redTransparent;
+                        board[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
+                        left += 60;
+                        boardPanel.Controls.Add(board[i, j]);
                     }
-                    else if (j % 2 == 0 && i % 2 == 0)
+                    else if (boardPositions[i, j] == 1 && i > 4)
                     {
-                        board[i, j].BackColor = Color.FromArgb(255, 0, 255, 0);
-                    }
-                    else if (j % 2 != 0 && i % 2 == 0)
-                    {
-                        board[i, j].BackColor = Color.FromArgb(255, 0, 255, 255);
+                        board[i, j] = new PictureBox();
+
+                        board[i, j].Location = new Point(left, top);
+                        board[i, j].Size = new Size(60, 60);
+                        board[i, j].BackColor = Color.Transparent;
+                        board[i, j].Image = Properties.Resources.blueTransparent;
+                        board[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
+                        left += 60;
+                        boardPanel.Controls.Add(board[i, j]);
                     }
                     else
                     {
-                        board[i, j].BackColor = Color.FromArgb(255, 0, 0, 255);
+                        board[i, j] = new PictureBox();
+
+                        board[i, j].Location = new Point(left, top);
+                        board[i, j].Size = new Size(60, 60);
+                        board[i, j].BackColor = Color.Transparent;
+                        left += 60;
+                        boardPanel.Controls.Add(board[i, j]);
                     }
 
-                    board[i, j].Location = new Point(left, top);
-                    board[i, j].Size = new Size(50, 50);
-                    left += 50;
-                    boardPanel.Controls.Add(board[i, j]);
                 }
-                top += 50;
+                top += 60;
             }
 
 
-        }
+            for (int i = 0; i < 8; i++)
+            {
 
-   
+                for (int j = 0; j < 8; j++)
+                {
+                    board[i, j].MouseClick += new MouseEventHandler(clickOnPiece);
+
+                }
+
+            }
+        }
+        void clickOnPiece(object sender, EventArgs e)
+        {
+
+            if (pieceClicked == true)
+            {
+                PictureBox p = (PictureBox)sender;
+                p.Image = Properties.Resources.redTransparent;
+                p.SizeMode = PictureBoxSizeMode.CenterImage;
+                pieceClicked = false;
+            }
+            else
+            {
+                PictureBox p = (PictureBox)sender;
+                PictureBox temp = new PictureBox();
+                temp.Image = p.Image;
+                p.Image = null;
+                pieceClicked = true;
+            }
+           
+
+        }
     }
 }

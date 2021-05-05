@@ -7,3 +7,4 @@ F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csproj.GenerateResource
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csproj.CoreCompileInputs.cache
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.exe
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.pdb
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csprojAssemblyReference.cache
