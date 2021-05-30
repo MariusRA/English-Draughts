@@ -7,9 +7,23 @@ using System.Windows.Forms;
 
 namespace Draughts
 {
-
-    class Piece : PictureBox
+    public enum PieceType
     {
- 
+        normalPiece=0,
+        kingPiece=1
+    };
+
+    public enum PieceColor
+    {
+        redPiece = 0,
+        bluePiece = 1
+    };
+
+    class Piece 
+    {
+       public PieceColor color;
+       public int lineposition;
+       public int columnposition;
+       public PieceType type;
     }
 }

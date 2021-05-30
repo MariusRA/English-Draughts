@@ -13,112 +13,50 @@ namespace Draughts
 
     public partial class Form1 : Form
     {
-        PictureBox[,] board;
-        int dimensXxY = 8;
-        int[,] boardPositions;
+        Game draughtsGame = new Game();
 
-        static bool pieceClicked=false;
         public Form1()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            boardPositions = new int[,]{
-                {1,-1,1,-1,1,-1,1,-1 },
-                {-1,1,-1,1,-1,1,-1,1 },
-                {1,-1,1,-1,1,-1,1,-1 },
-                {-1,-1,-1,-1,-1,-1,-1,-1 },
-                {-1,-1,-1,-1,-1,-1,-1,-1 },
-                {-1,1,-1,1,-1,1,-1,1 },
-                {1,-1,1,-1,1,-1,1,-1 },
-                {-1,1,-1,1,-1,1,-1,1 }
-            };
+            redP.SizeMode = PictureBoxSizeMode.CenterImage;
+            redP.Location = new Point(600, 90);
+            redCaptured.Location = new Point(670, 105);
 
-            board = new PictureBox[dimensXxY, dimensXxY];
-            boardPanel.SetBounds(100, 25, 480, 480);
-            boardPanel.BackgroundImage = Properties.Resources.draughtsBoard;
+            blueP.SizeMode = PictureBoxSizeMode.CenterImage;
+            blueP.Location = new Point(600, 390);
+            blueCaptured.Location = new Point(670, 405);
 
-            int top = 0, left = 0;
+            this.Controls.Add(Game.gameboard.boardPanel);
 
-            for (int i = 0; i < 8; i++)
+            draughtsGame.showAvailableMoves();
+            foreach (var cell in Game.gameboard.cells) 
             {
-                left = 0;
-
-                for (int j = 0; j < 8; j++)
-                {
-                    if (boardPositions[i, j] == 1 && i < 4)
-                    {
-                        board[i, j] = new PictureBox();
-
-                        board[i, j].Location = new Point(left, top);
-                        board[i, j].Size = new Size(60, 60);
-                        board[i, j].BackColor = Color.Transparent;
-                        board[i, j].Image = Properties.Resources.redTransparent;
-                        board[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
-                        left += 60;
-                        boardPanel.Controls.Add(board[i, j]);
-                    }
-                    else if (boardPositions[i, j] == 1 && i > 4)
-                    {
-                        board[i, j] = new PictureBox();
-
-                        board[i, j].Location = new Point(left, top);
-                        board[i, j].Size = new Size(60, 60);
-                        board[i, j].BackColor = Color.Transparent;
-                        board[i, j].Image = Properties.Resources.blueTransparent;
-                        board[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
-                        left += 60;
-                        boardPanel.Controls.Add(board[i, j]);
-                    }
-                    else
-                    {
-                        board[i, j] = new PictureBox();
-
-                        board[i, j].Location = new Point(left, top);
-                        board[i, j].Size = new Size(60, 60);
-                        board[i, j].BackColor = Color.Transparent;
-                        left += 60;
-                        boardPanel.Controls.Add(board[i, j]);
-                    }
-
-                }
-                top += 60;
-            }
-
-
-            for (int i = 0; i < 8; i++)
-            {
-
-                for (int j = 0; j < 8; j++)
-                {
-                    board[i, j].MouseClick += new MouseEventHandler(clickOnPiece);
-
-                }
-
+                cell.Click += pieceClick;
             }
         }
-        void clickOnPiece(object sender, EventArgs e)
+        void pieceClick(object sender, EventArgs e)
         {
+            Game.click = true;
 
-            if (pieceClicked == true)
+            Tablesquare temp = sender as Tablesquare;
+            draughtsGame.showAvailableMoves();
+
+            if (temp.piece.color == PieceColor.redPiece)
             {
-                PictureBox p = (PictureBox)sender;
-                p.Image = Properties.Resources.redTransparent;
-                p.SizeMode = PictureBoxSizeMode.CenterImage;
-                pieceClicked = false;
+                foreach(var list in Game.availableMovesRed)
+                {
+                    if(list[0]==temp.piece.lineposition && list[1] == temp.piece.columnposition)
+                    {
+                       
+                    }
+                }
             }
-            else
-            {
-                PictureBox p = (PictureBox)sender;
-                PictureBox temp = new PictureBox();
-                temp.Image = p.Image;
-                p.Image = null;
-                pieceClicked = true;
-            }
-           
 
         }
     }
