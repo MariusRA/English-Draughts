@@ -27,10 +27,12 @@ namespace Draughts
         public PieceType type;
 
         public List<Tuple<int, int>> possiblePieceMoves;
+        public List<Tuple<int, int>> takeMoves;
 
         public Piece()
         {
             possiblePieceMoves = new List<Tuple<int, int>>();
+            takeMoves = new List<Tuple<int, int>>();
         }
     }
 }

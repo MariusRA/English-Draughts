@@ -15,6 +15,7 @@ namespace Draughts
     {
         Game draughtsGame = new Game();
         public bool click = false;
+        public bool flag = false;
         static int oldr, oldc;
         static int newr, newc;
         static List<Tuple<int, int>> currentPossibleMoves;
@@ -136,8 +137,20 @@ namespace Draughts
                         }
                     }
                     t.piece.possiblePieceMoves = draughtsGame.movesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                    currentPossibleMoves = draughtsGame.movesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                    draughtsGame.showAvailableMovesToUser(t.piece.possiblePieceMoves, draughtsGame.turn, Game.gameboard);
+                    t.piece.takeMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                    if (t.piece.takeMoves.Count() != 0)
+                    {
+                        flag = true;
+                        currentPossibleMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        draughtsGame.showAvailableMovesToUser(t.piece.takeMoves, draughtsGame.turn, Game.gameboard);
+                    }
+                    else
+                    {
+                        flag = false;
+                        currentPossibleMoves = draughtsGame.movesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        draughtsGame.showAvailableMovesToUser(t.piece.possiblePieceMoves, draughtsGame.turn, Game.gameboard);
+                    }
+                                    
                     if (currentPossibleMoves.Count() != 0)
                     {
                         click = true;
@@ -146,7 +159,6 @@ namespace Draughts
                 }
                 else
                 {
-                    MessageBox.Show("piesa nula ");
                     click = false;
                 }
 
@@ -176,10 +188,31 @@ namespace Draughts
                     {
                         if (currentPossibleMoves.Contains(destination))
                         {
-                            draughtsGame.movePiece(oldr, oldc, newr, newc, Game.gameboard);
-                            draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
-                            click = false;
-                            draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
+                            if (flag == true)
+                            {
+                                draughtsGame.takePiece(oldr, oldc, newr, newc, Game.gameboard);
+                                if (draughtsGame.turn == PieceColor.redPiece)
+                                {
+                                    redCaptured.Text = (Int16.Parse(redCaptured.Text) + 1).ToString();
+                                }
+                                else
+                                {
+                                    blueCaptured.Text = (Int16.Parse(blueCaptured.Text) + 1).ToString();
+                                }
+                                draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
+                                click = false;
+                                draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
+                                flag = false;
+                            }
+                            else
+                            {
+                                draughtsGame.movePiece(oldr, oldc, newr, newc, Game.gameboard);
+                                draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
+                                click = false;
+                                draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
+                                
+                            }
+                            
 
                             if (draughtsGame.turn == PieceColor.redPiece)
                             {

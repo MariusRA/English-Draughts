@@ -12,11 +12,12 @@ namespace Draughts
     {
         public static Board gameboard;
         public PieceColor turn;
-        public static Tablesquare temporarySquare;
-        public static PieceColor selectedPieceColor;
 
         public List<List<int>> availableMovesRed = new List<List<int>>();
         public List<List<int>> availableMovesBlue = new List<List<int>>();
+        public List<List<int>> takeMovesRed = new List<List<int>>();
+        public List<List<int>> takeMovesBlue = new List<List<int>>();
+
         //lista pt mutari la fiecare piesa
 
         public Game()
@@ -29,6 +30,8 @@ namespace Draughts
         {
             availableMovesRed = new List<List<int>>();
             availableMovesBlue = new List<List<int>>();
+            takeMovesRed = new List<List<int>>();
+            takeMovesBlue = new List<List<int>>();
 
             for (int i = 0; i < 8; i++)
             {
@@ -96,7 +99,63 @@ namespace Draughts
                         }
                     }
 
+                    if (Game.gameboard.cells[i, j].piece != null && Game.gameboard.cells[i, j].piece.color == PieceColor.redPiece)
+                    {
+                        if ((i + 2 < 8) && (j + 2 < 8) && gameboard.cells[i + 1, j + 1].piece != null && gameboard.cells[i + 1, j + 1].piece.color == PieceColor.bluePiece)
+                        {
+                            if (Game.gameboard.cells[i + 2, j + 2].piece == null)
+                            {
+                                List<int> takeMovesForPiece = new List<int>();
+                                takeMovesForPiece.Add(i);
+                                takeMovesForPiece.Add(j);
+                                takeMovesForPiece.Add(i + 2);
+                                takeMovesForPiece.Add(j + 2);
+                                takeMovesRed.Add(takeMovesForPiece);
 
+                            }
+                        }
+                        if ((i + 2 < 8) && (j - 2 >= 0) && gameboard.cells[i + 1, j - 1].piece != null && gameboard.cells[i + 1, j - 1].piece.color == PieceColor.bluePiece)
+                        {
+                            if (Game.gameboard.cells[i + 2, j - 2].piece == null)
+                            {
+                                List<int> takeMovesForPiece = new List<int>();
+                                takeMovesForPiece.Add(i);
+                                takeMovesForPiece.Add(j);
+                                takeMovesForPiece.Add(i + 2);
+                                takeMovesForPiece.Add(j - 2);
+                                takeMovesRed.Add(takeMovesForPiece);
+                            }
+                        }
+                    }
+
+                    if (Game.gameboard.cells[i, j].piece != null && Game.gameboard.cells[i, j].piece.color == PieceColor.bluePiece)
+                    {
+                        if ((i - 2 >= 0) && (j + 2 < 8) && gameboard.cells[i - 1, j + 1].piece != null && gameboard.cells[i - 1, j + 1].piece.color == PieceColor.redPiece)
+                        {
+                            if (Game.gameboard.cells[i - 2, j + 2].piece == null)
+                            {
+                                List<int> takeMovesForPiece = new List<int>();
+                                takeMovesForPiece.Add(i);
+                                takeMovesForPiece.Add(j);
+                                takeMovesForPiece.Add(i - 2);
+                                takeMovesForPiece.Add(j + 2);
+                                takeMovesBlue.Add(takeMovesForPiece);
+
+                            }
+                        }
+                        if ((i - 2 >= 0) && (j - 2 >= 0) && gameboard.cells[i - 1, j - 1].piece != null && gameboard.cells[i - 1, j - 1].piece.color == PieceColor.redPiece)
+                        {
+                            if (Game.gameboard.cells[i - 2, j - 2].piece == null)
+                            {
+                                List<int> takeMovesForPiece = new List<int>();
+                                takeMovesForPiece.Add(i);
+                                takeMovesForPiece.Add(j);
+                                takeMovesForPiece.Add(i - 2);
+                                takeMovesForPiece.Add(j - 2);
+                                takeMovesBlue.Add(takeMovesForPiece);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -117,6 +176,34 @@ namespace Draughts
             if (color == PieceColor.bluePiece)
             {
                 foreach (var listOfMoves in availableMovesBlue)
+                {
+                    if (listOfMoves[0] == line && listOfMoves[1] == column)
+                    {
+                        Tuple<int, int> to = new Tuple<int, int>(listOfMoves[2], listOfMoves[3]);
+                        moves.Add(to);
+                    }
+                }
+            }
+
+            return moves;
+        }
+        public List<Tuple<int, int>> takeMovesForCurrentPiece(int line, int column, PieceColor color)
+        {
+            List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+            if (color == PieceColor.redPiece)
+            {
+                foreach (var listOfMoves in takeMovesRed)
+                {
+                    if (listOfMoves[0] == line && listOfMoves[1] == column)
+                    {
+                        Tuple<int, int> to = new Tuple<int, int>(listOfMoves[2], listOfMoves[3]);
+                        moves.Add(to);
+                    }
+                }
+            }
+            if (color == PieceColor.bluePiece)
+            {
+                foreach (var listOfMoves in takeMovesBlue)
                 {
                     if (listOfMoves[0] == line && listOfMoves[1] == column)
                     {
@@ -160,13 +247,62 @@ namespace Draughts
             gameboard.cells[oldrow, oldcolumn].Image = null;
 
         }
-        public void showAvailableMovesToUser(List<Tuple<int,int>>moves, PieceColor turn, Board gameboard)
+        public void takePiece(int oldrow, int oldcolumn, int newrow, int newcolumn, Board gameboard)
         {
-            foreach(var pair in moves)
+            if (gameboard.cells[oldrow, oldcolumn].piece != null && gameboard.cells[oldrow, oldcolumn].piece.color == PieceColor.redPiece)
+            {
+                gameboard.cells[newrow, newcolumn].piece = new Piece();
+                gameboard.cells[newrow, newcolumn].piece.lineposition = newrow;
+                gameboard.cells[newrow, newcolumn].piece.columnposition = newcolumn;
+                gameboard.cells[newrow, newcolumn].piece.color = gameboard.cells[oldrow, oldcolumn].piece.color;
+                gameboard.cells[newrow, newcolumn].Image = gameboard.cells[oldrow, oldcolumn].Image;
+
+                gameboard.cells[oldrow, oldcolumn].piece = null;
+                gameboard.cells[oldrow, oldcolumn].Image = null;
+
+                if (oldcolumn - newcolumn > 0)
+                {
+                    gameboard.cells[oldrow + 1, oldcolumn - 1].piece = null;
+                    gameboard.cells[oldrow + 1, oldcolumn - 1].Image = null;
+                }
+                else
+                {
+                    gameboard.cells[oldrow + 1, oldcolumn + 1].piece = null;
+                    gameboard.cells[oldrow + 1, oldcolumn + 1].Image = null;
+                }
+            }
+            if (gameboard.cells[oldrow, oldcolumn].piece !=null && gameboard.cells[oldrow, oldcolumn].piece.color == PieceColor.bluePiece)
+            {
+                gameboard.cells[newrow, newcolumn].piece = new Piece();
+                gameboard.cells[newrow, newcolumn].piece.lineposition = newrow;
+                gameboard.cells[newrow, newcolumn].piece.columnposition = newcolumn;
+                gameboard.cells[newrow, newcolumn].piece.color = gameboard.cells[oldrow, oldcolumn].piece.color;
+                gameboard.cells[newrow, newcolumn].Image = gameboard.cells[oldrow, oldcolumn].Image;
+
+                gameboard.cells[oldrow, oldcolumn].piece = null;
+                gameboard.cells[oldrow, oldcolumn].Image = null;
+
+                if (oldcolumn - newcolumn > 0)
+                {
+                    gameboard.cells[oldrow - 1, oldcolumn - 1].piece = null;
+                    gameboard.cells[oldrow - 1, oldcolumn - 1].Image = null;
+                }
+                else
+                {
+                    gameboard.cells[oldrow - 1, oldcolumn + 1].piece = null;
+                    gameboard.cells[oldrow - 1, oldcolumn + 1].Image = null;
+                }
+            }
+
+
+        }
+        public void showAvailableMovesToUser(List<Tuple<int, int>> moves, PieceColor turn, Board gameboard)
+        {
+            foreach (var pair in moves)
             {
                 var line = pair.Item1;
                 var column = pair.Item2;
-                
+
                 if (turn == PieceColor.redPiece)
                 {
                     gameboard.cells[line, column].BorderStyle = BorderStyle.Fixed3D;
@@ -181,7 +317,7 @@ namespace Draughts
         }
         public void clearAvailableMovesAfterClick(List<Tuple<int, int>> moves, Board gameboard)
         {
-            foreach(var pair in moves)
+            foreach (var pair in moves)
             {
                 int line = pair.Item1;
                 int column = pair.Item2;
