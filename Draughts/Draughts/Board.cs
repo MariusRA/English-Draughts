@@ -41,9 +41,8 @@ namespace Draughts
 
                 for (int j = 0; j < 8; j++)
                 {
-                    cells[i, j] = new Tablesquare();
+                    cells[i, j] = new Tablesquare();                  
                     cells[i, j].Image = null;
-                    cells[i, j].piece = null;
                     cells[i, j].BackColor = Color.Transparent;
                     cells[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
                     cells[i, j].Location = new Point(left, top);

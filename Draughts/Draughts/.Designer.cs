@@ -33,6 +33,8 @@ namespace Draughts
             this.blueP = new System.Windows.Forms.PictureBox();
             this.redCaptured = new System.Windows.Forms.Label();
             this.blueCaptured = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lTurn = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.redP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueP)).BeginInit();
             this.SuspendLayout();
@@ -75,11 +77,32 @@ namespace Draughts
             this.blueCaptured.TabIndex = 3;
             this.blueCaptured.Text = "0";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(771, 494);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 44);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Show pieces positions";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lTurn
+            // 
+            this.lTurn.AutoSize = true;
+            this.lTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTurn.Location = new System.Drawing.Point(771, 271);
+            this.lTurn.Name = "lTurn";
+            this.lTurn.Size = new System.Drawing.Size(0, 25);
+            this.lTurn.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1047, 754);
+            this.Controls.Add(this.lTurn);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.blueCaptured);
             this.Controls.Add(this.redCaptured);
             this.Controls.Add(this.blueP);
@@ -100,6 +123,8 @@ namespace Draughts
         private System.Windows.Forms.PictureBox blueP;
         private System.Windows.Forms.Label redCaptured;
         private System.Windows.Forms.Label blueCaptured;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lTurn;
     }
 }
 
