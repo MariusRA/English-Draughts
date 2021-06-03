@@ -51,7 +51,7 @@ namespace Draughts
                 lTurn.Text = "Blue";
             }
 
-            draughtsGame.getAvailableMoves();
+            draughtsGame.getAvailableMovesNormalPieces();
             enableClick(draughtsGame.getPiecesCoordinates(draughtsGame.turn), true);
             disableClickWhiteSquares();
 
@@ -119,7 +119,8 @@ namespace Draughts
 
             Tablesquare t = sender as Tablesquare;
 
-            draughtsGame.getAvailableMoves();
+            draughtsGame.getAvailableMovesNormalPieces();
+            draughtsGame.getAvailableMovesKingPieces();
 
             if (!click)
             {
@@ -136,18 +137,29 @@ namespace Draughts
                             }
                         }
                     }
-                    t.piece.possiblePieceMoves = draughtsGame.movesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                    t.piece.takeMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                    /////modificari pe aici 
+                    if (t.piece.type == PieceType.normalPiece)
+                    {
+                        t.piece.possiblePieceMoves = draughtsGame.movesForNormalPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        t.piece.takeMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                    }
+                    else if(t.piece.type==PieceType.kingPiece && t.piece.color==draughtsGame.turn)
+                    {
+                        t.piece.possiblePieceMoves = draughtsGame.movesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        t.piece.takeMoves = draughtsGame.takeMovesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                    }
+                    //////////////////////////////////////
+                  
                     if (t.piece.takeMoves.Count() != 0)
                     {
                         flag = true;
-                        currentPossibleMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        currentPossibleMoves = t.piece.takeMoves;
                         draughtsGame.showAvailableMovesToUser(t.piece.takeMoves, draughtsGame.turn, Game.gameboard);
                     }
                     else
                     {
                         flag = false;
-                        currentPossibleMoves = draughtsGame.movesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        currentPossibleMoves = t.piece.possiblePieceMoves;
                         draughtsGame.showAvailableMovesToUser(t.piece.possiblePieceMoves, draughtsGame.turn, Game.gameboard);
                     }
                                     
@@ -213,7 +225,6 @@ namespace Draughts
                                 
                             }
                             
-
                             if (draughtsGame.turn == PieceColor.redPiece)
                             {
                                 lTurn.Text = "Red";
