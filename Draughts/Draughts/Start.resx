@@ -117,23 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="draughtsBoard" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\draughtsBoard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="blueKingTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blueKingTransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="redKingTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\redKingTransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="blueTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blueTransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="redTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\redTransparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="backgroundCheckers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\backgroundCheckers.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

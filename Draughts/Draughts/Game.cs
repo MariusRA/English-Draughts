@@ -401,6 +401,57 @@ namespace Draughts
             gameboard.cells[oldrow, oldcolumn].Image = null;
 
         }
+        public List<int> randomNormalMoveAI(Board gameboard)
+        {
+            List<List<int>> allMovesForReds = new List<List<int>>();
+            List<int> pieceToBeMoved = new List<int>();
+
+            foreach (var list in availableMovesRed)
+            {
+                allMovesForReds.Add(list);
+            }
+
+            foreach (var list in availableMovesKing)
+            {
+                if (gameboard.cells[list[0], list[1]].piece.color == PieceColor.redPiece)
+                {
+                    allMovesForReds.Add(list);
+                }
+
+            }
+
+            Random rand = new Random();
+            int index = rand.Next(allMovesForReds.Count() - 1);
+            pieceToBeMoved = allMovesForReds[index];
+
+            return pieceToBeMoved;
+        }
+        public List<int> randomTakeMoveAI(Board gameboard)
+        {
+            List<List<int>> allTakeMovesForReds = new List<List<int>>();
+            List<int> pieceToBeMoved = new List<int>();
+
+            foreach (var list in takeMovesRed)
+            {
+                allTakeMovesForReds.Add(list);
+            }
+
+            foreach (var list in takeMovesKing)
+            {
+                if (gameboard.cells[list[0], list[1]].piece.color == PieceColor.redPiece)
+                {
+                    allTakeMovesForReds.Add(list);
+                }
+
+            }
+            Random rand = new Random();
+            if (allTakeMovesForReds.Count() != 0)
+            {
+                int index = rand.Next(allTakeMovesForReds.Count() - 1);
+                pieceToBeMoved = allTakeMovesForReds[index];
+            }
+            return pieceToBeMoved;
+        }
         public void takePiece(int oldrow, int oldcolumn, int newrow, int newcolumn, Board gameboard)
         {
             if (gameboard.cells[oldrow, oldcolumn].piece != null && gameboard.cells[oldrow, oldcolumn].piece.color == PieceColor.redPiece && Game.gameboard.cells[oldrow, oldcolumn].piece.type == PieceType.normalPiece)

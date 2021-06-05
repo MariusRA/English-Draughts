@@ -63,6 +63,16 @@ namespace Draughts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backgroundCheckers {
+            get {
+                object obj = ResourceManager.GetObject("backgroundCheckers", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap blueKingTransparent {
             get {
                 object obj = ResourceManager.GetObject("blueKingTransparent", resourceCulture);

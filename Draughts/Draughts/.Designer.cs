@@ -29,33 +29,16 @@ namespace Draughts
         /// </summary>
         private void InitializeComponent()
         {
-            this.redP = new System.Windows.Forms.PictureBox();
-            this.blueP = new System.Windows.Forms.PictureBox();
             this.redCaptured = new System.Windows.Forms.Label();
             this.blueCaptured = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.lTurn = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.redP)).BeginInit();
+            this.btnGoBack = new System.Windows.Forms.Button();
+            this.blueP = new System.Windows.Forms.PictureBox();
+            this.redP = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.blueP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redP)).BeginInit();
             this.SuspendLayout();
-            // 
-            // redP
-            // 
-            this.redP.Image = global::Draughts.Properties.Resources.redTransparent;
-            this.redP.Location = new System.Drawing.Point(771, 110);
-            this.redP.Name = "redP";
-            this.redP.Size = new System.Drawing.Size(60, 60);
-            this.redP.TabIndex = 0;
-            this.redP.TabStop = false;
-            // 
-            // blueP
-            // 
-            this.blueP.Image = global::Draughts.Properties.Resources.blueTransparent;
-            this.blueP.Location = new System.Drawing.Point(771, 373);
-            this.blueP.Name = "blueP";
-            this.blueP.Size = new System.Drawing.Size(60, 60);
-            this.blueP.TabIndex = 1;
-            this.blueP.TabStop = false;
             // 
             // redCaptured
             // 
@@ -79,7 +62,7 @@ namespace Draughts
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(771, 494);
+            this.button1.Location = new System.Drawing.Point(771, 488);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 44);
             this.button1.TabIndex = 4;
@@ -96,11 +79,41 @@ namespace Draughts
             this.lTurn.Size = new System.Drawing.Size(0, 25);
             this.lTurn.TabIndex = 5;
             // 
+            // btnGoBack
+            // 
+            this.btnGoBack.Location = new System.Drawing.Point(771, 547);
+            this.btnGoBack.Name = "btnGoBack";
+            this.btnGoBack.Size = new System.Drawing.Size(116, 35);
+            this.btnGoBack.TabIndex = 6;
+            this.btnGoBack.Text = "Exit Game";
+            this.btnGoBack.UseVisualStyleBackColor = true;
+            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
+            // 
+            // blueP
+            // 
+            this.blueP.Image = global::Draughts.Properties.Resources.blueTransparent;
+            this.blueP.Location = new System.Drawing.Point(771, 373);
+            this.blueP.Name = "blueP";
+            this.blueP.Size = new System.Drawing.Size(60, 60);
+            this.blueP.TabIndex = 1;
+            this.blueP.TabStop = false;
+            // 
+            // redP
+            // 
+            this.redP.Image = global::Draughts.Properties.Resources.redTransparent;
+            this.redP.Location = new System.Drawing.Point(771, 110);
+            this.redP.Name = "redP";
+            this.redP.Size = new System.Drawing.Size(60, 60);
+            this.redP.TabIndex = 0;
+            this.redP.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1047, 754);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ClientSize = new System.Drawing.Size(1075, 764);
+            this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.lTurn);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.blueCaptured);
@@ -110,8 +123,8 @@ namespace Draughts
             this.Name = "Form1";
             this.Text = "English Draughts";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.redP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,6 +138,7 @@ namespace Draughts
         private System.Windows.Forms.Label blueCaptured;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lTurn;
+        private System.Windows.Forms.Button btnGoBack;
     }
 }
 

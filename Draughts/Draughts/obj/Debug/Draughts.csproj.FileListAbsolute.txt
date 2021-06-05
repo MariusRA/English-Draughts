@@ -8,3 +8,6 @@ F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csproj.CoreCompileInput
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.exe
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.pdb
 F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.csprojAssemblyReference.cache
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.blueWon.resources
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.redWon.resources
+F:\English_draughts\Draughts\Draughts\obj\Debug\Draughts.Start.resources

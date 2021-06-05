@@ -28,7 +28,6 @@ namespace Draughts
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             redP.SizeMode = PictureBoxSizeMode.CenterImage;
             redP.Location = new Point(600, 90);
             redCaptured.Location = new Point(670, 105);
@@ -37,7 +36,8 @@ namespace Draughts
             blueP.Location = new Point(600, 390);
             blueCaptured.Location = new Point(670, 405);
 
-            button1.Location = new Point(600, 575);
+            button1.Location = new Point(600, 525);
+            btnGoBack.Location = new Point(600, 575);
             lTurn.Location = new Point(650, 240);
 
             this.Controls.Add(Game.gameboard.boardPanel);
@@ -88,6 +88,31 @@ namespace Draughts
 
         }
 
+        private void gameEnded()
+        {
+            List<Tuple<int, int>> rrr = new List<Tuple<int, int>>();
+            rrr = draughtsGame.getPiecesCoordinates(PieceColor.redPiece);
+
+            List<Tuple<int, int>> rr = new List<Tuple<int, int>>();
+            rr = draughtsGame.getPiecesCoordinates(PieceColor.bluePiece);
+
+            if (rrr.Count() == 0)
+            {
+                this.Hide();
+                blueWon b = new blueWon();
+                b.Show();
+                return;
+            }
+            if (rr.Count() == 0)
+            {
+                this.Hide();
+                redWon r = new redWon();
+                r.Show();
+                return;
+            }
+
+        }
+
         private void disableClickWhiteSquares()
         {
             for (int i = 0; i < 8; i++)
@@ -101,6 +126,13 @@ namespace Draughts
 
                 }
             }
+        }
+
+        private void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Start startForm = new Start();
+            this.Hide();
+            startForm.Show();
         }
 
         private void enableClick(List<Tuple<int, int>> pieces, bool enable)
@@ -122,9 +154,62 @@ namespace Draughts
             draughtsGame.getAvailableMovesNormalPieces();
             draughtsGame.getAvailableMovesKingPieces();
 
-            if (!click)
+            if (draughtsGame.turn == PieceColor.bluePiece)
             {
-                if (t.piece != null)
+                if (!click)
+                {
+                    if (t.piece != null)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 8; j++)
+                            {
+                                if (Game.gameboard.cells[i, j].Equals(sender))
+                                {
+                                    oldr = i;
+                                    oldc = j;
+                                }
+                            }
+                        }
+                        /////modificari pe aici 
+                        if (t.piece.type == PieceType.normalPiece)
+                        {
+                            t.piece.possiblePieceMoves = draughtsGame.movesForNormalPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                            t.piece.takeMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        }
+                        else if (t.piece.type == PieceType.kingPiece && t.piece.color == draughtsGame.turn)
+                        {
+                            t.piece.possiblePieceMoves = draughtsGame.movesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                            t.piece.takeMoves = draughtsGame.takeMovesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
+                        }
+                        //////////////////////////////////////
+
+                        if (t.piece.takeMoves.Count() != 0)
+                        {
+                            flag = true;
+                            currentPossibleMoves = t.piece.takeMoves;
+                            draughtsGame.showAvailableMovesToUser(t.piece.takeMoves, draughtsGame.turn, Game.gameboard);
+                        }
+                        else
+                        {
+                            flag = false;
+                            currentPossibleMoves = t.piece.possiblePieceMoves;
+                            draughtsGame.showAvailableMovesToUser(t.piece.possiblePieceMoves, draughtsGame.turn, Game.gameboard);
+                        }
+
+                        if (currentPossibleMoves.Count() != 0)
+                        {
+                            click = true;
+                        }
+
+                    }
+                    else
+                    {
+                        click = false;
+                    }
+
+                }
+                else
                 {
                     for (int i = 0; i < 8; i++)
                     {
@@ -132,114 +217,91 @@ namespace Draughts
                         {
                             if (Game.gameboard.cells[i, j].Equals(sender))
                             {
-                                oldr = i;
-                                oldc = j;
+                                newr = i;
+                                newc = j;
                             }
                         }
                     }
-                    /////modificari pe aici 
-                    if (t.piece.type == PieceType.normalPiece)
+                    if (Game.gameboard.cells[newr, newc].piece != null)
                     {
-                        t.piece.possiblePieceMoves = draughtsGame.movesForNormalPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                        t.piece.takeMoves = draughtsGame.takeMovesForCurrentPiece(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                    }
-                    else if(t.piece.type==PieceType.kingPiece && t.piece.color==draughtsGame.turn)
-                    {
-                        t.piece.possiblePieceMoves = draughtsGame.movesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                        t.piece.takeMoves = draughtsGame.takeMovesForKing(t.piece.lineposition, t.piece.columnposition, draughtsGame.turn);
-                    }
-                    //////////////////////////////////////
-                  
-                    if (t.piece.takeMoves.Count() != 0)
-                    {
-                        flag = true;
-                        currentPossibleMoves = t.piece.takeMoves;
-                        draughtsGame.showAvailableMovesToUser(t.piece.takeMoves, draughtsGame.turn, Game.gameboard);
+                        click = false;
+                        draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
                     }
                     else
                     {
-                        flag = false;
-                        currentPossibleMoves = t.piece.possiblePieceMoves;
-                        draughtsGame.showAvailableMovesToUser(t.piece.possiblePieceMoves, draughtsGame.turn, Game.gameboard);
-                    }
-                                    
-                    if (currentPossibleMoves.Count() != 0)
-                    {
-                        click = true;
-                    }
-
-                }
-                else
-                {
-                    click = false;
-                }
-
-            }
-            else
-            {
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (Game.gameboard.cells[i, j].Equals(sender))
+                        Tuple<int, int> destination = new Tuple<int, int>(newr, newc);
+                        if (Game.gameboard.cells[newr, newc].piece == null)
                         {
-                            newr = i;
-                            newc = j;
-                        }
-                    }
-                }
-                if (Game.gameboard.cells[newr, newc].piece != null)
-                {
-                    click = false;
-                    draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
-                }
-                else
-                {
-                    Tuple<int, int> destination = new Tuple<int, int>(newr, newc);
-                    if (Game.gameboard.cells[newr, newc].piece == null)
-                    {
-                        if (currentPossibleMoves.Contains(destination))
-                        {
-                            if (flag == true)
+                            if (currentPossibleMoves.Contains(destination))
                             {
-                                draughtsGame.takePiece(oldr, oldc, newr, newc, Game.gameboard);
-                                if (draughtsGame.turn == PieceColor.redPiece)
+                                if (flag == true)
                                 {
-                                    redCaptured.Text = (Int16.Parse(redCaptured.Text) + 1).ToString();
+                                    draughtsGame.takePiece(oldr, oldc, newr, newc, Game.gameboard);
+                                    if (draughtsGame.turn == PieceColor.redPiece)
+                                    {
+                                        redCaptured.Text = (Int16.Parse(redCaptured.Text) + 1).ToString();
+                                    }
+                                    else
+                                    {
+                                        blueCaptured.Text = (Int16.Parse(blueCaptured.Text) + 1).ToString();
+                                    }
+                                    draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
+                                    click = false;
+                                    draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
+                                    flag = false;
                                 }
                                 else
                                 {
-                                    blueCaptured.Text = (Int16.Parse(blueCaptured.Text) + 1).ToString();
+                                    draughtsGame.movePiece(oldr, oldc, newr, newc, Game.gameboard);
+                                    draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
+                                    click = false;
+                                    draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
+
                                 }
-                                draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
-                                click = false;
-                                draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
-                                flag = false;
+
+                                if (draughtsGame.turn == PieceColor.redPiece)
+                                {
+                                    lTurn.Text = "Red";
+                                }
+                                else
+                                {
+                                    lTurn.Text = "Blue";
+                                }
                             }
-                            else
-                            {
-                                draughtsGame.movePiece(oldr, oldc, newr, newc, Game.gameboard);
-                                draughtsGame.clearAvailableMovesAfterClick(currentPossibleMoves, Game.gameboard);
-                                click = false;
-                                draughtsGame.turn = draughtsGame.turn == PieceColor.bluePiece ? PieceColor.redPiece : PieceColor.bluePiece;
-                                
-                            }
-                            
-                            if (draughtsGame.turn == PieceColor.redPiece)
-                            {
-                                lTurn.Text = "Red";
-                            }
-                            else
-                            {
-                                lTurn.Text = "Blue";
-                            }
+
                         }
-
                     }
-                }
 
+                }
             }
+            if(draughtsGame.turn==PieceColor.redPiece)
+            {
+                
+                draughtsGame.getAvailableMovesNormalPieces();
+                draughtsGame.getAvailableMovesKingPieces();
+
+                List<int> aMove = new List<int>();
+                List<int> aTakeMove = new List<int>();
+
+                aMove = draughtsGame.randomNormalMoveAI(Game.gameboard);
+                aTakeMove = draughtsGame.randomTakeMoveAI(Game.gameboard);
+
+                if (aTakeMove.Count() != 0)
+                {
+                    draughtsGame.takePiece(aTakeMove[0], aTakeMove[1], aTakeMove[2], aTakeMove[3], Game.gameboard);
+                    draughtsGame.turn = PieceColor.bluePiece;
+                }
+                else
+                {
+                    draughtsGame.movePiece(aMove[0], aMove[1], aMove[2], aMove[3], Game.gameboard);
+                    draughtsGame.turn = PieceColor.bluePiece;
+                }
+          
+            }
+
             draughtsGame.promotePiece(Game.gameboard);
+            gameEnded();
         }
+
     }
 }
